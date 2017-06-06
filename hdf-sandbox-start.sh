@@ -45,7 +45,7 @@ docker run --name sandbox --hostname "sandbox-hdf.hortonworks.com" --privileged 
 -p 17788:7788 \
 -p 17789:7789 \
 -p 12222:22 \
-sandbox:v5 /usr/sbin/sshd -D
+sandbox /usr/sbin/sshd -D
 fi
 docker exec -d sandbox service mysqld start
 docker exec -t sandbox service postgresql start
