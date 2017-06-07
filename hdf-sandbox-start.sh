@@ -7,7 +7,7 @@ if [ $? -eq 0 ]; then
 else
 docker run --name sandbox --hostname "sandbox-hdf.hortonworks.com" --privileged -d \
 -p 12181:2181 \
--p 16010:16010 \
+-p 17010:16010 \
 -p 51070:50070 \
 -p 13000:3000 \
 -p 14200:4200 \
@@ -45,7 +45,7 @@ docker run --name sandbox --hostname "sandbox-hdf.hortonworks.com" --privileged 
 -p 17788:7788 \
 -p 17789:7789 \
 -p 12222:22 \
-sandbox /usr/sbin/sshd -D
+sandbox-hdf /usr/sbin/sshd -D
 fi
 docker exec -d sandbox service mysqld start
 docker exec -t sandbox service postgresql start
@@ -53,4 +53,3 @@ docker exec -t sandbox service ambari-server start
 docker exec -t sandbox service ambari-agent start
 sleep 20
 echo "Successfully Started Sandbox Container"
-
