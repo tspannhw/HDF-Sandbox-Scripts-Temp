@@ -37,11 +37,11 @@ docker run --name sandbox-hdf --hostname "sandbox-hdf.hortonworks.com" --privile
 -p 12222:22 \
 sandbox /usr/sbin/sshd -D
 fi
-#docker exec -t sandbox /etc/init.d/startup_script start
 docker exec -d sandbox-hdf service mysqld start
-docker exec -d sandbox-hdf service ambari-server start
-docker exec -d sandbox-hdf service ambari-agent start
+docker exec -d sandbox-hdf service postgresql start
+docker exec -t sandbox-hdf ambari-server start
+docker exec -t sandbox-hdf ambari-agent start
+docker exec -t sandbox-hdf  /bin/sh -c ' until curl -u admin:admin -H "X-Requested-By:ambari" -i -X GET  http://localhost:8080/api/v1/clusters/Sandbox/hosts/sandbox-hdf.hortonworks.com/host_components/ZOOKEEPER_SERVER | grep state | grep -v desired | grep INSTALLED; do sleep 1; done; sleep 10'
 docker exec -d sandbox-hdf /root/start_sandbox.sh
 docker exec -d sandbox-hdf /etc/init.d/tutorials start
-sleep 20
 echo "Successfully Started HDF Sandbox Container"
